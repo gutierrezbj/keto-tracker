@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ff6b35">
+    <title>KETO Tracker - Mi Transformación</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Vista Home -->
+        <div id="home-view" class="view active">
+            <header class="header">
+                <h1>🔥 Mi KETO</h1>
+                <div class="week-info">
+                    <div id="current-day">Cargando...</div>
+                    <div id="current-week">Semana 1</div>
+                </div>
+            </header>
+
+            <div class="card">
+                <h2>📅 MENÚ HOY</h2>
+                <div class="menu-item">
+                    <div class="menu-time">🍳 Desayuno (8:00 AM)</div>
+                    <div id="breakfast-menu" class="menu-text">Cargando...</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-time">😋 Almuerzo (14:00 PM)</div>
+                    <div id="lunch-menu" class="menu-text">Cargando...</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-time">🌙 Cena (antes 20:00)</div>
+                    <div id="dinner-menu" class="menu-text">Cargando...</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2>💧 HIDRATACIÓN HOY</h2>
+                    <span id="water-count">0/13</span>
+                </div>
+                <div class="progress-bar">
+                    <div id="water-progress" class="progress-fill"></div>
+                </div>
+                <button onclick="addWater()" class="btn-primary">💧 +1 Vaso</button>
+            </div>
+        </div>
+
+        <!-- Vista Agua -->
+        <div id="water-view" class="view">
+            <header class="header">
+                <h1>💧 Agua</h1>
+            </header>
+
+            <div class="card">
+                <div class="water-circle">
+                    <div id="water-circle-progress" class="water-circle-progress"></div>
+                    <div class="water-circle-content">
+                        <div id="water-counter" class="water-number">0</div>
+                        <div class="water-label">vasos</div>
+                    </div>
+                </div>
+
+                <div class="water-info">
+                    <p>Meta diaria: <strong>13 vasos (3.2L)</strong></p>
+                    <p id="glasses-remaining">Faltan: 13 vasos</p>
+                </div>
+
+                <div class="button-group">
+                    <button onclick="addWater()" class="btn-primary">💧 +1 Vaso</button>
+                    <button onclick="removeWater()" class="btn-secondary">➖ -1 Vaso</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vista Ayuno -->
+        <div id="fasting-view" class="view">
+            <header class="header">
+                <h1>⏱️ Ayuno</h1>
+            </header>
+
+            <button onclick="startFasting()" class="btn-primary">▶️ Iniciar Ayuno</button>
+
+            <div id="fasting-list"></div>
+        </div>
+
+        <!-- Vista Progreso -->
+        <div id="progress-view" class="view">
+            <header class="header">
+                <h1>📊 Progreso</h1>
+            </header>
+
+            <div class="card">
+                <h2>📅 Días</h2>
+                <div class="stats-grid">
+                    <div class="stat">
+                        <div class="stat-value" id="days-completed">0</div>
+                        <div class="stat-label">Completados</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="days-remaining">28</div>
+                        <div class="stat-label">Restantes</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2>⚖️ Peso</h2>
+                    <button onclick="addWeight()" class="btn-secondary">📝 Registrar</button>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat">
+                        <div class="stat-label">Peso Inicial</div>
+                        <div class="stat-value">90.0 kg</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Cambio</div>
+                        <div class="stat-value" style="color: #10b981;" id="weight-lost">0.0 kg</div>
+                    </div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Actual</div>
+                    <div class="stat-value" id="current-weight">90.0 kg</div>
+                </div>
+                <canvas id="weight-chart" width="320" height="200"></canvas>
+            </div>
+
+            <div class="card">
+                <h2>💧 Historial Agua</h2>
+                <div id="water-history"></div>
+            </div>
+        </div>
+
+        <!-- Navegación -->
+        <nav class="nav">
+            <button class="nav-btn active" data-view="home" onclick="showView('home')">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-label">Inicio</span>
+            </button>
+            <button class="nav-btn" data-view="water" onclick="showView('water')">
+                <span class="nav-icon">💧</span>
+                <span class="nav-label">Agua</span>
+            </button>
+            <button class="nav-btn" data-view="fasting" onclick="showView('fasting')">
+                <span class="nav-icon">⏱️</span>
+                <span class="nav-label">Ayuno</span>
+            </button>
+            <button class="nav-btn" data-view="progress" onclick="showView('progress')">
+                <span class="nav-icon">📊</span>
+                <span class="nav-label">Progreso</span>
+            </button>
+        </nav>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
