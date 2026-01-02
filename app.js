@@ -183,8 +183,16 @@ function showView(viewName) {
 function updateHomeView() {
     const today = new Date();
     const dayOfWeek = today.toLocaleDateString('es-ES', { weekday: 'long' });
-    const dayNumber = Math.floor((today - START_DATE) / (1000 * 60 * 60 * 24)) + 1;
-    const weekNumber = Math.min(Math.ceil(dayNumber / 7), 4);
+    
+    // Si estamos ANTES de la fecha de inicio, usar día 1 y semana 1
+    let dayNumber, weekNumber;
+    if (today < START_DATE) {
+        dayNumber = 1;
+        weekNumber = 1;
+    } else {
+        dayNumber = Math.floor((today - START_DATE) / (1000 * 60 * 60 * 24)) + 1;
+        weekNumber = Math.min(Math.ceil(dayNumber / 7), 4);
+    }
     
     document.getElementById('current-day').textContent = 
         `${dayOfWeek.charAt(0).toUpperCase() + dayOfWeek.slice(1)} - Día ${dayNumber}`;
@@ -347,7 +355,14 @@ function updateFastingTimers() {
 // VISTA PROGRESO
 function updateProgressView() {
     const today = new Date();
-    const dayNumber = Math.max(1, Math.floor((today - START_DATE) / (1000 * 60 * 60 * 24)) + 1);
+    
+    // Si estamos ANTES de la fecha de inicio, mostrar día 0
+    let dayNumber;
+    if (today < START_DATE) {
+        dayNumber = 0;
+    } else {
+        dayNumber = Math.floor((today - START_DATE) / (1000 * 60 * 60 * 24)) + 1;
+    }
     
     document.getElementById('days-completed').textContent = Math.min(dayNumber, 28);
     document.getElementById('days-remaining').textContent = Math.max(0, 28 - dayNumber);
